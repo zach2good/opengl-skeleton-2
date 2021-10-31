@@ -9,7 +9,11 @@ A no-fuss skeleton for creating OpenGL applications. Following on from my [2016 
 ### Windows
 
 ```ps
-TODO
+mkdir build
+cd build
+cmake ..
+cmake --build .
+.\Debug\opengl-skeleton-2.exe
 ```
 
 ### Browser (via Emscripten on Windows)
@@ -25,7 +29,7 @@ emrun .\opengl-skeleton-2.html
 ### Ubuntu 20.04 (via WSL2 on Windows 11)
 
 ```bash
-sudo apt-get install libgles2-mesa-dev
+sudo apt-get install mesa-common-dev libgles2-mesa-dev
 mkdir build
 cd build
 cmake ..

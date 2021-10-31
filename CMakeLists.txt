@@ -8,6 +8,8 @@ CPMAddPackage("gh:gabime/spdlog@1.8.2")
 
 set(SOURCES
   src/app.cpp
+  src/renderer.cpp
+  src/shader.cpp
 )
 
 if(EMSCRIPTEN)
@@ -28,8 +30,27 @@ if(EMSCRIPTEN)
       LINK_FLAGS "-s WASM=1 -s SINGLE_FILE=1 -s USE_SDL=2 -s FULL_ES2=1"
   )
   target_link_libraries(opengl-skeleton-2 spdlog SDL2)
-else()
+
+elseif(WIN32)
+  message(STATUS "WIN32: 1")
+  CPMAddPackage("gh:libsdl-org/SDL#release-2.0.16")
+
+  CPMAddPackage(
+    NAME glew
+    GIT_REPOSITORY https://github.com/Perlmint/glew-cmake.git
+    GIT_TAG f456deace7b408655109aaeff71421ef2d3858c6
+  )
+
+  add_library(glad ext/glad/src/glad.c)
+  target_include_directories(glad PUBLIC ext/glad/include)
+
+  target_link_libraries(opengl-skeleton-2 spdlog SDL2::SDL2-static libglew_static glad opengl32)
+  set_target_properties(opengl-skeleton-2
+    PROPERTIES
+      LINK_FLAGS "/SUBSYSTEM:WINDOWS"
+  )
+
+else() # Linux build
   CPMAddPackage("gh:libsdl-org/SDL#release-2.0.16")
   target_link_libraries(opengl-skeleton-2 spdlog SDL2::SDL2-static GL GLESv2 EGL)
-endif(EMSCRIPTEN)
-
+endif()

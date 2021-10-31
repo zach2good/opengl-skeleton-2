@@ -1,12 +1,9 @@
 #pragma once
 
-#ifdef __EMSCRIPTEN__
-#include <SDL.h>
-#else
-#include <SDL.h>
-#endif
+#include "common.h"
 
-#include <string>
+class Renderer;
+class IDrawable;
 
 class App
 {
@@ -21,8 +18,8 @@ public:
     void render();
 
 protected:
-    SDL_Window*   m_Window;
-    SDL_GLContext m_GLContext;
+    std::unique_ptr<Renderer>               m_Renderer;
+    std::vector<std::unique_ptr<IDrawable>> m_Drawables;
 
     bool m_CloseRequested = false;
 };

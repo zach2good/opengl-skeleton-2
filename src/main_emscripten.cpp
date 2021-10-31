@@ -1,5 +1,5 @@
-#include <emscripten.h>
 #include "app.h"
+#include <emscripten.h>
 
 App app("OpenGL Skeleton 2", 1280, 720);
 

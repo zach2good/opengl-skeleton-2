@@ -15,7 +15,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y software-properties-common cmake libgles2-mesa-dev
+          sudo apt-get install -y software-properties-common cmake mesa-common-dev libgles2-mesa-dev
       - name: Configure CMake
         run: |
           export CC=/usr/bin/clang-11
@@ -40,7 +40,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y software-properties-common cmake libgles2-mesa-dev
+          sudo apt-get install -y software-properties-common cmake mesa-common-dev libgles2-mesa-dev
       - name: Configure CMake
         run: |
           export CC=/usr/bin/gcc-10
@@ -49,24 +49,3 @@ jobs:
       - name: Build
         run: |
           make -j $(nproc)
-
-  Startup_Checks_2004:
-    runs-on: ubuntu-20.04
-    needs: [Linux_2004_Clang11_64bit, Linux_2004_GCC10_64bit]
-    steps:
-      - uses: actions/checkout@v1
-        with:
-          fetch-depth: 1
-      - uses: actions/download-artifact@v2
-        with:
-          name: executables
-          path: .
-      - name: Install Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y software-properties-common cmake
-      - name: Run executable
-        run: |
-          chmod +x opengl-skeleton-2
-          sudo ./opengl-skeleton-2
-

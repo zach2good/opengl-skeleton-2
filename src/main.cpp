@@ -1,3 +1,8 @@
+#ifdef WIN32
+#define SDL_MAIN_HANDLED 1
+#define main             WinMain
+#endif
+
 #include "app.h"
 
 int main(int argc, char* argv[])
