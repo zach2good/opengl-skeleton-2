@@ -15,7 +15,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y software-properties-common cmake
+          sudo apt-get install -y software-properties-common cmake libgles2-mesa-dev
       - name: Configure CMake
         run: |
           export CC=/usr/bin/clang-11
@@ -40,7 +40,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y software-properties-common cmake
+          sudo apt-get install -y software-properties-common cmake libgles2-mesa-dev
       - name: Configure CMake
         run: |
           export CC=/usr/bin/gcc-10

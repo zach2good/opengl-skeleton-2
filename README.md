@@ -2,28 +2,41 @@
 
 A no-fuss skeleton for creating OpenGL applications. Following on from my [2016 OpenGL Skeleton](https://github.com/zach2good/opengl-skeleton).
 
+# Screenshot
+![](img/em_triangle.png)
 ## Build
 
-[CPM.cmake](https://github.com/cpm-cmake/CPM.cmake/tree/v0.34.0) will handle dependencies.
+### Windows
 
-Ubuntu 20.04 (WSL2)
+```ps
+TODO
+```
+
+### Browser (via Emscripten on Windows)
+
+```ps
+choco install ninja make
+mkdir build
+cd build
+emcmake cmake -G Ninja ..
+cmake --build .
+emrun .\opengl-skeleton-2.html
+```
+### Ubuntu 20.04 (via WSL2 on Windows 11)
+
 ```bash
+sudo apt-get install libgles2-mesa-dev
 mkdir build
 cd build
 cmake ..
 make
+./opengl-skeleton-2
 ```
 
-## Features
-- Easily target:
-  - OpenGL 4+
-  - OpenGL ES2
-  - WebGL via Emscripten
+### Code dependencies
 
-## Screenshots
-
-TODO
+[CPM.cmake](https://github.com/cpm-cmake/CPM.cmake/tree/v0.34.0) will handle code dependencies at CMake configure time.
 
 ## License
 
-MIT License
+[MIT License](LICENSE)

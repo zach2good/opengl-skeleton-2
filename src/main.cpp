@@ -1,7 +1,15 @@
-#include <spdlog/spdlog.h>
+#include "app.h"
 
-int main()
+int main(int argc, char* argv[])
 {
-    spdlog::info("Hello, world!");
+    App app("OpenGL Skeleton 2", 1280, 720);
+
+    while (app.running())
+    {
+        app.handleInput();
+        app.tick();
+        app.render();
+    }
+
     return 0;
 }
