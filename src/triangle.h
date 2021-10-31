@@ -1,9 +1,9 @@
 #pragma once
 
 #include "common.h"
+#include "idrawable.h"
 #include "renderer.h"
 #include "shader.h"
-#include "idrawable.h"
 
 class Triangle : public IDrawable
 {
@@ -29,7 +29,7 @@ public:
         glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
     }
 
-    ~Triangle()
+    virtual ~Triangle()
     {
     }
 

@@ -1,44 +1,33 @@
 #include "shader.h"
+#include "path.h"
+#include <fstream>
 
-// Shader sources
-const GLchar* vertexSource =
-    "attribute vec4 position;                      \n"
-    "varying vec3 color;                           \n"
-    "void main()                                   \n"
-    "{                                             \n"
-    "    gl_Position = vec4(position.xyz, 1.0);    \n"
-    "    color = gl_Position.xyz + vec3(0.5);      \n"
-    "}                                             \n";
-
-// Fragment/pixel shader
-const GLchar* fragmentSource =
-    "precision mediump float;                     \n"
-    "varying vec3 color;                          \n"
-    "void main()                                  \n"
-    "{                                            \n"
-    "    gl_FragColor = vec4 (color, 1.0);        \n"
-    "}                                            \n";
+std::string loadShaderString(std::string const& filename)
+{
+    std::string   shaderPath = SHADER_PATH;
+    std::string   path       = shaderPath + filename;
+    std::ifstream inputFile(path);
+    return std::string((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());
+}
 
 Shader::Shader(std::string const& vertexFilename, std::string const& fragmentFilename)
 {
-    //std::ignore = vertexFilename;
-    //std::ignore = fragmentFilename;
-
-    // TODO: Read shader source from files
-    m_vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(m_vertexShaderID, 1, &vertexSource, NULL);
+    auto          vertStr   = loadShaderString(vertexFilename);
+    const GLchar* vertChStr = vertStr.c_str();
+    m_vertexShaderID        = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(m_vertexShaderID, 1, &vertChStr, NULL);
     glCompileShader(m_vertexShaderID);
 
-    m_fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(m_fragmentShaderID, 1, &fragmentSource, NULL);
+    auto          fragStr   = loadShaderString(fragmentFilename);
+    const GLchar* fragChStr = fragStr.c_str();
+    m_fragmentShaderID      = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(m_fragmentShaderID, 1, &fragChStr, NULL);
     glCompileShader(m_fragmentShaderID);
 
     m_programID = glCreateProgram();
     glAttachShader(m_programID, m_vertexShaderID);
     glAttachShader(m_programID, m_fragmentShaderID);
     glLinkProgram(m_programID);
-
-    bind();
 }
 
 Shader::~Shader()

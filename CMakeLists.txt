@@ -6,6 +6,12 @@ include(cmake/CPM.cmake)
 
 CPMAddPackage("gh:gabime/spdlog@1.8.2")
 
+set(SHADER_PATH \"${PROJECT_SOURCE_DIR}/shaders/\")
+configure_file (
+  "${PROJECT_SOURCE_DIR}/src/path.h.in"
+  "${PROJECT_SOURCE_DIR}/src/path.h"
+)
+
 set(SOURCES
   src/app.cpp
   src/renderer.cpp

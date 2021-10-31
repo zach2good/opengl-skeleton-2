@@ -2,8 +2,10 @@
 
 A no-fuss skeleton for creating OpenGL applications. Following on from my [2016 OpenGL Skeleton](https://github.com/zach2good/opengl-skeleton).
 
-# Screenshot
+# Screenshots
 ![](img/em_triangle.png)
+![](img/em_lines.png)
+
 ## Build
 
 ### Windows

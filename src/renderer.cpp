@@ -1,6 +1,7 @@
 #include "renderer.h"
 
 #include "idrawable.h"
+#include "randomf.h"
 
 Renderer::Renderer(std::string const& title, std::size_t width, std::size_t height)
 : m_Width(width)
@@ -48,6 +49,10 @@ Renderer::Renderer(std::string const& title, std::size_t width, std::size_t heig
     spdlog::info("GL_VERSION: {}", glGetString(GL_VERSION));
     spdlog::info("GL_SHADING_LANGUAGE_VERSION: {}", glGetString(GL_SHADING_LANGUAGE_VERSION));
     spdlog::info("GL_EXTENSIONS: {}", glGetString(GL_EXTENSIONS));
+
+    m_ClearR = randomf(0.0f, 0.5f);
+    m_ClearG = randomf(0.0f, 0.5f);
+    m_ClearB = randomf(0.0f, 0.5f);
 }
 
 Renderer::~Renderer()
@@ -59,7 +64,7 @@ Renderer::~Renderer()
 
 void Renderer::clear()
 {
-    glClearColor(0.2f, 0.2f, 0.2f, 0.2f);
+    glClearColor(m_ClearR, m_ClearG, m_ClearB, 0.2f);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -74,23 +79,4 @@ void Renderer::draw(std::vector<std::unique_ptr<IDrawable>>& drawables)
 void Renderer::present()
 {
     SDL_GL_SwapWindow(m_Window);
-}
-
-float Renderer::normalizeWidth(std::size_t pixelPos)
-{
-    // Map (0 to 1280) to (-1 to 1)
-    // slope = (output_end - output_start) / (input_end - input_start)
-    // output = output_start + slope * (input - input_start)
-
-    float slope = (1.0f - -1.0f) / ((float)m_Width - 0.0f);
-    return -1.0f + slope * ((float)pixelPos - 0.0f);
-}
-
-float Renderer::normalizeHeight(std::size_t pixelPos)
-{
-    // Map (0 to 720) to (-1 to 1)
-    // slope = (output_end - output_start) / (input_end - input_start)
-    // output = output_start + slope * (input - input_start)
-    float slope = (1.0f - -1.0f) / ((float)m_Height - 0.0f);
-    return -1.0f + slope * ((float)pixelPos - 0.0f);
 }
