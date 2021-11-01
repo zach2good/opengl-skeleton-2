@@ -24,11 +24,9 @@ App::App(std::string const& title, std::size_t width, std::size_t height)
     m_Drawables.emplace_back(std::make_unique<Line>(*m_Renderer, 100, 200, 200, 200, 1));
 }
 
-App::~App()
-{
-}
+App::~App() = default;
 
-bool App::running()
+bool App::running() const
 {
     return !m_CloseRequested;
 }

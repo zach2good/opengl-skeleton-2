@@ -11,7 +11,7 @@ public:
     App(std::string const& title, std::size_t width, std::size_t height);
     ~App();
 
-    bool running();
+    bool running() const;
 
     void handleInput();
     void tick();

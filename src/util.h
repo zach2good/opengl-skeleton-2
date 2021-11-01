@@ -5,8 +5,7 @@
 struct Point
 {
     Point()
-    : x(0.0f)
-    , y(0.0f)
+     
     {
     }
 
@@ -16,8 +15,8 @@ struct Point
     {
     }
 
-    float x;
-    float y;
+    float x{0.0f};
+    float y{0.0f};
 };
 
 // https://www.geeksforgeeks.org/find-corners-of-rectangle-using-mid-points/
