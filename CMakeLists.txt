@@ -6,11 +6,8 @@ include(cmake/CPM.cmake)
 
 CPMAddPackage("gh:gabime/spdlog@1.8.2")
 
-set(SHADER_PATH \"${PROJECT_SOURCE_DIR}/shaders/\")
-configure_file (
-  "${PROJECT_SOURCE_DIR}/src/path.h.in"
-  "${PROJECT_SOURCE_DIR}/src/path.h"
-)
+configure_file("${PROJECT_SOURCE_DIR}/shaders/line.frag.hlsl" "${PROJECT_BINARY_DIR}/shaders/line.frag.hlsl" COPYONLY)
+configure_file("${PROJECT_SOURCE_DIR}/shaders/line.vert.hlsl" "${PROJECT_BINARY_DIR}/shaders/line.vert.hlsl" COPYONLY)
 
 set(SOURCES
   src/app.cpp
@@ -28,13 +25,16 @@ endif()
 add_executable(opengl-skeleton-2 ${SOURCES})
 target_compile_features(opengl-skeleton-2 PRIVATE cxx_std_20)
 
+set(SHADER_PATH \"${PROJECT_SOURCE_DIR}/shaders/\")
+
 if(EMSCRIPTEN)
   message(STATUS "EMSCRIPTEN: 1")
+  set(SHADER_PATH \"shaders/\")
   set_target_properties(opengl-skeleton-2
     PROPERTIES
       OUTPUT_NAME "opengl-skeleton-2"
       SUFFIX ".html"
-      LINK_FLAGS "-s WASM=1 -s SINGLE_FILE=1 -s USE_SDL=2 -s FULL_ES2=1"
+      LINK_FLAGS "-s WASM=1 -s SINGLE_FILE=1 -s USE_SDL=2 -s FULL_ES2=1 --preload-file ${PROJECT_BINARY_DIR}/shaders/line.vert.hlsl --preload-file ${PROJECT_BINARY_DIR}/shaders/line.frag.hlsl"
   )
   target_link_libraries(opengl-skeleton-2 spdlog SDL2)
 
@@ -61,3 +61,8 @@ else() # Linux build
   CPMAddPackage("gh:libsdl-org/SDL#release-2.0.16")
   target_link_libraries(opengl-skeleton-2 spdlog SDL2::SDL2-static GL GLESv2 EGL)
 endif()
+
+configure_file (
+  "${PROJECT_SOURCE_DIR}/src/path.h.in"
+  "${PROJECT_SOURCE_DIR}/src/path.h"
+)
