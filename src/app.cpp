@@ -4,7 +4,6 @@
 #include "line.h"
 #include "randomf.h"
 #include "renderer.h"
-#include "triangle.h"
 
 App::App(std::string const& title, std::size_t width, std::size_t height)
 : m_Renderer(std::make_unique<Renderer>(title, width, height))

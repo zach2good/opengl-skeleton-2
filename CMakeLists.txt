@@ -16,6 +16,7 @@ set(SOURCES
   src/app.cpp
   src/renderer.cpp
   src/shader.cpp
+  src/line.cpp
 )
 
 if(EMSCRIPTEN)
